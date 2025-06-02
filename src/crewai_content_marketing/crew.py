@@ -1,7 +1,6 @@
 """
 Content Marketing Crew Implementation
 """
-
 from crewai import Agent, Task, Crew, Process
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import SerperDevTool, ScrapeWebsiteTool
