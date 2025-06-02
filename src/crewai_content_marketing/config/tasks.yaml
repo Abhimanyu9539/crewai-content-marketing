@@ -1,17 +1,301 @@
-research_task:
+# Phase 1: Research & Strategy Tasks
+market_research_task:
   description: >
-    Conduct a thorough research about {topic}
-    Make sure you find any interesting and relevant information given
-    the current year is {current_year}.
+    Conduct comprehensive market research for the topic '{topic}' to identify the latest trends, 
+    competitor insights, and market opportunities. Focus on content published in 2024-2025 to ensure 
+    current relevance. Research should target insights relevant to {target_audience}.
+    
+    Your research should include:
+    1. Latest trends and developments related to '{topic}' (search for "2024 2025 trends")
+    2. Current market landscape and key players
+    3. Recent competitor content and strategies
+    4. Emerging opportunities and challenges
+    5. Industry news and updates from the past 6 months
+    
+    Use current date context: It is currently {current_date}. Prioritize information on this year.
   expected_output: >
-    A list with 10 bullet points of the most relevant information about {topic}
-  agent: researcher
+    A comprehensive market research summary containing:
+    - 5 latest trends related to '{topic}' with publication dates
+    - 3 key competitor insights with recent examples
+    - Current market opportunities and challenges
+    - Relevant statistics and data points from current year
+  agent: research_strategist
 
-reporting_task:
+audience_analysis_task:
   description: >
-    Review the context you got and expand each topic into a full section for a report.
-    Make sure the report is detailed and contains any and all relevant information.
+    Analyze the target audience '{target_audience}' and their current behavior patterns, preferences, 
+    and engagement habits across different social media platforms. Research current audience trends 
+    and platform usage patterns for {current_date}
+    
+    Your analysis should cover:
+    1. Demographics and psychographics of {target_audience}
+    2. Platform preferences and usage patterns (Instagram, LinkedIn, Twitter, Facebook, blogs)
+    3. Content consumption habits and engagement patterns
+    4. Current challenges and pain points related to '{topic}'
+    5. Preferred content formats and communication styles
+    
   expected_output: >
-    A fully fledged report with the main topics, each with a full section of information.
-    Formatted as markdown without '```'
-  agent: reporting_analyst
+    A detailed audience analysis report including:
+    - Target audience demographics and characteristics
+    - Platform-specific behavior and preferences
+    - Content engagement patterns and optimal posting times
+    - Key pain points and interests related to '{topic}'
+    - Recommendations for content approach and messaging
+  agent: research_strategist
+
+content_strategy_task:
+  description: >
+    Based on the market research and audience analysis, develop a comprehensive content strategy 
+    for '{topic}' that will resonate with {target_audience}. Create a strategic framework that 
+    incorporates the key messages: {key_messages} and maintains a {brand_tone} tone throughout.
+    
+    Your strategy should define:
+    1. Core messaging and value proposition
+    2. Content pillars and themes
+    3. Platform-specific content approaches
+    4. Tone and voice guidelines ({brand_tone})
+    5. Key messaging framework incorporating: {key_messages}
+    6. Content structure and flow recommendations
+    
+    Ensure all recommendations align with current best practices and audience insights.
+  expected_output: >
+    A strategic content plan document containing:
+    - Core messaging framework and value proposition
+    - Content approach for each platform (Instagram, LinkedIn, Twitter, Facebook, Blog)
+    - Detailed tone and voice guidelines reflecting {brand_tone}
+    - Integration strategy for key messages: {key_messages}
+    - Content structure recommendations and best practices
+    - Success metrics and engagement strategies
+  agent: content_strategist
+  context: [market_research_task, audience_analysis_task]
+
+# Phase 2: Content Creation Tasks
+draft_content_task:
+  description: >
+    Create an initial comprehensive content draft about '{topic}' that will serve as the foundation 
+    for all platform adaptations. The content should speak directly to {target_audience} using a 
+    {brand_tone} tone and naturally incorporate these key messages: {key_messages}.
+    
+    Create content that includes:
+    1. A compelling hook/opening that grabs attention
+    2. Main content body covering key aspects of '{topic}'
+    3. Clear value proposition for {target_audience}
+    4. Natural integration of key messages: {key_messages}
+    5. Engaging storytelling elements
+    6. Sufficient content depth for blog adaptation (500-800 words)
+    7. Key points that can be condensed for social media
+    
+    Maintain {brand_tone} tone throughout and ensure content is informative and engaging.
+  expected_output: >
+    A comprehensive content draft including:
+    - Engaging opening hook and introduction
+    - Well-structured main content (500-800 words)
+    - Clear value propositions for {target_audience}
+    - Natural integration of all key messages: {key_messages}
+    - Conclusion with clear next steps or insights
+    - Key quotable moments for social media adaptation
+    - Consistent {brand_tone} tone throughout
+  agent: content_writer
+  context: [content_strategy_task]
+
+edit_content_task:
+  description: >
+    Review and refine the content draft to ensure it meets the highest quality standards. Focus on 
+    improving clarity, flow, grammatical accuracy, and ensuring perfect alignment with the {brand_tone} 
+    tone for {target_audience}.
+    
+    Your editing should focus on:
+    1. Grammar, spelling, and punctuation accuracy
+    2. Sentence structure and readability improvement
+    3. Logical flow and coherence
+    4. Tone consistency ({brand_tone})
+    5. Message clarity and impact
+    6. Engagement and persuasiveness
+    7. Fact-checking and accuracy
+    
+    Ensure the content maintains its appeal to {target_audience} while being error-free and polished.
+  expected_output: >
+    A polished, high-quality content piece featuring:
+    - Perfect grammar, spelling, and punctuation
+    - Improved sentence structure and readability
+    - Logical flow and smooth transitions
+    - Consistent {brand_tone} tone throughout
+    - Enhanced clarity and message impact
+    - Engaging and persuasive language
+    - Ready for platform adaptation
+  agent: content_editor
+  context: [draft_content_task]
+
+optimize_blog_seo_task:
+  description: >
+    Optimize the edited content specifically for blog publication with SEO best practices. Focus on 
+    making the content about '{topic}' discoverable by {target_audience} while maintaining the 
+    {brand_tone} tone and readability.
+    
+    Your optimization should include:
+    1. SEO-optimized title incorporating '{topic}' keywords
+    2. Meta description (150-160 characters)
+    3. Strategic keyword integration throughout content
+    4. Internal linking suggestions
+    5. Image alt-text recommendations
+    6. Call-to-action integration: {call_to_action}
+    
+    Ensure SEO elements enhance rather than compromise content quality and {brand_tone}.
+  expected_output: >
+    SEO-optimized blog content including:
+    - Compelling SEO title with '{topic}' keywords
+    - Meta description (150-160 characters)
+    - Well-structured content with proper headers
+    - Strategic keyword placement and density
+    - Internal linking and image recommendations
+    - Integrated call-to-action: {call_to_action}
+    - Maintained {brand_tone} tone and readability
+  agent: seo_optimizer
+  context: [edit_content_task]
+  markdown: true
+
+# Phase 3: Platform Adaptation Tasks
+adapt_instagram_task:
+  description: >
+    Adapt the edited content for Instagram, creating an engaging post that resonates with {target_audience} 
+    on this visual platform. Maintain {brand_tone} tone while optimizing for Instagram's format and 
+    engagement patterns.
+    
+    Create Instagram content with:
+    1. Compelling caption (2200 characters max)
+    2. Visual content description or concept
+    3. Strategic hashtag selection (20-30 hashtags)
+    4. Engaging opening hook
+    5. Story elements and personality
+    6. Clear call-to-action: {call_to_action}
+    7. Line breaks for readability
+    
+    Focus on visual storytelling and community engagement while covering '{topic}'.
+  expected_output: >
+    Instagram-optimized content including:
+    - Engaging caption about '{topic}' (under 2200 characters)
+    - Visual content concept or description
+    - 20-30 relevant and trending hashtags
+    - Strong opening hook and story elements
+    - {brand_tone} tone with personality
+    - Clear call-to-action: {call_to_action}
+    - Proper formatting with line breaks
+  agent: platform_adapter
+  context: [edit_content_task]
+  output_file: instagram_post.md
+
+adapt_linkedin_task:
+  description: >
+    Transform the edited content for LinkedIn's professional audience. Create content about '{topic}' 
+    that positions expertise and provides value to {target_audience} in a professional context using 
+    {brand_tone} tone.
+    
+    Develop LinkedIn content featuring:
+    1. Professional opening that establishes credibility
+    2. Industry insights and expertise demonstration
+    3. Business value and practical applications
+    4. Professional storytelling elements
+    5. Thought leadership positioning
+    6. Clear call-to-action: {call_to_action}
+    7. 3-5 relevant professional hashtags
+    
+    Focus on networking, expertise, and professional value related to '{topic}'.
+  expected_output: >
+    LinkedIn-optimized professional content including:
+    - Credibility-building opening about '{topic}'
+    - Industry insights and expertise demonstration
+    - Business value propositions for {target_audience}
+    - Professional storytelling and thought leadership
+    - {brand_tone} tone adapted for professional context
+    - Strategic call-to-action: {call_to_action}
+    - 3-5 relevant professional hashtags
+  agent: platform_adapter
+  context: [edit_content_task]
+  output_file: linkedin_post.md
+
+adapt_twitter_task:
+  description: >
+    Create Twitter-optimized content about '{topic}' that engages {target_audience} within the platform's 
+    character constraints. Maintain {brand_tone} tone while maximizing impact and shareability.
+    
+    Develop Twitter content with:
+    1. Concise, impactful messaging (280 characters max)
+    2. Strong hook or attention-grabber
+    3. Key insight or value proposition
+    4. 1-3 relevant hashtags
+    5. Conversation-starting elements
+    6. Clear call-to-action: {call_to_action}
+    7. Thread potential if needed
+    
+    Focus on engagement, shareability, and conversation around '{topic}'.
+  expected_output: >
+    Twitter-optimized content including:
+    - Impactful tweet about '{topic}' (under 280 characters)
+    - Strong attention-grabbing opening
+    - Key insight or value for {target_audience}
+    - 1-3 strategic hashtags
+    - {brand_tone} tone in concise format
+    - Engaging call-to-action: {call_to_action}
+    - Thread expansion ideas if applicable
+  agent: platform_adapter
+  context: [edit_content_task]
+  output_file: twitter_tweet.md
+
+adapt_facebook_task:
+  description: >
+    Adapt the edited content for Facebook's community-focused environment. Create content about '{topic}' 
+    that encourages discussion and engagement among {target_audience} while maintaining {brand_tone} tone.
+    
+    Create Facebook content featuring:
+    1. Community-engaging opening
+    2. Discussion-prompting elements
+    3. Relatable storytelling
+    4. Questions to encourage comments
+    5. Share-worthy value proposition
+    6. Clear call-to-action: {call_to_action}
+    7. Optimal length for feed engagement
+    
+    Focus on community building and conversation around '{topic}'.
+  expected_output: >
+    Facebook-optimized community content including:
+    - Engaging community-focused post about '{topic}'
+    - Discussion-prompting questions and elements
+    - Relatable storytelling for {target_audience}
+    - {brand_tone} tone with conversational elements
+    - Share-worthy insights and value
+    - Community-building call-to-action: {call_to_action}
+    - Optimal formatting for Facebook engagement
+  agent: platform_adapter
+  context: [edit_content_task]
+  output_file: facebook_post.md
+
+finalize_blog_task:
+  description: >
+    Format the SEO-optimized content into a complete, publication-ready blog post about '{topic}'. 
+    Ensure proper structure, formatting, and final polish for {target_audience} while maintaining 
+    {brand_tone} tone.
+    
+    Finalize blog post with:
+    1. Final title and meta description
+    2. Proper header structure (H1, H2, H3)
+    3. Introduction, body, and conclusion formatting
+    4. Call-to-action placement: {call_to_action}
+    5. Author bio or byline suggestions
+    6. Publication-ready formatting
+    7. Final proofread and polish
+    
+    Ensure the blog post is complete and ready for immediate publication.
+  expected_output: >
+    Complete, publication-ready blog post including:
+    - Final optimized title and meta description
+    - Properly structured content with headers
+    - Well-formatted introduction, body, and conclusion
+    - Strategic placement of call-to-action: {call_to_action}
+    - Professional formatting and layout
+    - {brand_tone} tone throughout
+    - Ready for immediate publication about '{topic}'
+  agent: platform_adapter
+  context: [optimize_blog_seo_task]
+  output_file: blog_post.md
+
+
