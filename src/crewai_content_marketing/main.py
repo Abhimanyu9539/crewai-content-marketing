@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 import sys
 import warnings
-
 from datetime import datetime
-
-from crewai_content_marketing.crew import CrewaiContentMarketing
+import agentops
+from content_marketing.crew import ContentMarketingCrew
 
 warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
+# Load dotenv
+import dotenv
+dotenv.load_dotenv()
+
+agentops.init()
 
 # This main file is intended to be a way for you to run your
 # crew locally, so refrain from adding unnecessary logic into this file.
@@ -17,52 +22,26 @@ def run():
     """
     Run the crew.
     """
+
     inputs = {
-        'topic': 'AI LLMs',
-        'current_year': str(datetime.now().year)
+        'topic': 'AI in Digital Marketing',
+        'target_audience': 'Marketing professionals and business owners',
+        'brand_tone': 'Professional yet approachable',
+        'key_messages': [
+            'AI makes marketing more efficient and effective',
+            'Automation saves time while improving results',
+            'Modern marketing tools are accessible to businesses of all sizes',
+            'Data-driven decisions lead to better marketing outcomes'
+        ],
+        'call_to_action': 'Schedule a free consultation to discover how AI can transform your marketing strategy',
+        'current_date': datetime.now().strftime("%B %d, %Y")
     }
     
     try:
-        CrewaiContentMarketing().crew().kickoff(inputs=inputs)
+        ContentMarketingCrew().crew().kickoff(inputs=inputs)
     except Exception as e:
         raise Exception(f"An error occurred while running the crew: {e}")
 
 
-def train():
-    """
-    Train the crew for a given number of iterations.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        'current_year': str(datetime.now().year)
-    }
-    try:
-        CrewaiContentMarketing().crew().train(n_iterations=int(sys.argv[1]), filename=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while training the crew: {e}")
-
-def replay():
-    """
-    Replay the crew execution from a specific task.
-    """
-    try:
-        CrewaiContentMarketing().crew().replay(task_id=sys.argv[1])
-
-    except Exception as e:
-        raise Exception(f"An error occurred while replaying the crew: {e}")
-
-def test():
-    """
-    Test the crew execution and returns the results.
-    """
-    inputs = {
-        "topic": "AI LLMs",
-        "current_year": str(datetime.now().year)
-    }
-    
-    try:
-        CrewaiContentMarketing().crew().test(n_iterations=int(sys.argv[1]), eval_llm=sys.argv[2], inputs=inputs)
-
-    except Exception as e:
-        raise Exception(f"An error occurred while testing the crew: {e}")
+if __name__ == "__main__":
+    run()
