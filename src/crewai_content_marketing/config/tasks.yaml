@@ -19,7 +19,6 @@ market_research_task:
     - 3 key competitor insights with recent examples
     - Current market opportunities and challenges
     - Relevant statistics and data points from current year
-  agent: research_strategist
 
 audience_analysis_task:
   description: >
@@ -41,7 +40,6 @@ audience_analysis_task:
     - Content engagement patterns and optimal posting times
     - Key pain points and interests related to '{topic}'
     - Recommendations for content approach and messaging
-  agent: research_strategist
 
 content_strategy_task:
   description: >
@@ -66,8 +64,6 @@ content_strategy_task:
     - Integration strategy for key messages: {key_messages}
     - Content structure recommendations and best practices
     - Success metrics and engagement strategies
-  agent: content_strategist
-  context: [market_research_task, audience_analysis_task]
 
 # Phase 2: Content Creation Tasks
 draft_content_task:
@@ -95,8 +91,6 @@ draft_content_task:
     - Conclusion with clear next steps or insights
     - Key quotable moments for social media adaptation
     - Consistent {brand_tone} tone throughout
-  agent: content_writer
-  context: [content_strategy_task]
 
 edit_content_task:
   description: >
@@ -123,8 +117,6 @@ edit_content_task:
     - Enhanced clarity and message impact
     - Engaging and persuasive language
     - Ready for platform adaptation
-  agent: content_editor
-  context: [draft_content_task]
 
 optimize_blog_seo_task:
   description: >
@@ -136,9 +128,10 @@ optimize_blog_seo_task:
     1. SEO-optimized title incorporating '{topic}' keywords
     2. Meta description (150-160 characters)
     3. Strategic keyword integration throughout content
-    4. Internal linking suggestions
-    5. Image alt-text recommendations
-    6. Call-to-action integration: {call_to_action}
+    4. Header structure (H1, H2, H3) for better readability
+    5. Internal linking suggestions
+    6. Image alt-text recommendations
+    7. Call-to-action integration: {call_to_action}
     
     Ensure SEO elements enhance rather than compromise content quality and {brand_tone}.
   expected_output: >
@@ -150,9 +143,6 @@ optimize_blog_seo_task:
     - Internal linking and image recommendations
     - Integrated call-to-action: {call_to_action}
     - Maintained {brand_tone} tone and readability
-  agent: seo_optimizer
-  context: [edit_content_task]
-  markdown: true
 
 # Phase 3: Platform Adaptation Tasks
 adapt_instagram_task:
@@ -180,9 +170,6 @@ adapt_instagram_task:
     - {brand_tone} tone with personality
     - Clear call-to-action: {call_to_action}
     - Proper formatting with line breaks
-  agent: platform_adapter
-  context: [edit_content_task]
-  output_file: instagram_post.md
 
 adapt_linkedin_task:
   description: >
@@ -209,9 +196,6 @@ adapt_linkedin_task:
     - {brand_tone} tone adapted for professional context
     - Strategic call-to-action: {call_to_action}
     - 3-5 relevant professional hashtags
-  agent: platform_adapter
-  context: [edit_content_task]
-  output_file: linkedin_post.md
 
 adapt_twitter_task:
   description: >
@@ -237,9 +221,6 @@ adapt_twitter_task:
     - {brand_tone} tone in concise format
     - Engaging call-to-action: {call_to_action}
     - Thread expansion ideas if applicable
-  agent: platform_adapter
-  context: [edit_content_task]
-  output_file: twitter_tweet.md
 
 adapt_facebook_task:
   description: >
@@ -265,9 +246,6 @@ adapt_facebook_task:
     - Share-worthy insights and value
     - Community-building call-to-action: {call_to_action}
     - Optimal formatting for Facebook engagement
-  agent: platform_adapter
-  context: [edit_content_task]
-  output_file: facebook_post.md
 
 finalize_blog_task:
   description: >
@@ -294,8 +272,3 @@ finalize_blog_task:
     - Professional formatting and layout
     - {brand_tone} tone throughout
     - Ready for immediate publication about '{topic}'
-  agent: platform_adapter
-  context: [optimize_blog_seo_task]
-  output_file: blog_post.md
-
-

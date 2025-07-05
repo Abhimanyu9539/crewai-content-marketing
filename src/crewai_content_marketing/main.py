@@ -1,28 +1,41 @@
-#!/usr/bin/env python
-import sys
-import warnings
-from datetime import datetime
-import agentops
-from content_marketing.crew import ContentMarketingCrew
-
-warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
-
 # Load dotenv
 import dotenv
+import agentops
 dotenv.load_dotenv()
 
 agentops.init()
 
+#!/usr/bin/env python
+import os
+import sys
+import warnings
+from datetime import datetime
+
+# Disable AgentOps telemetry to avoid circular import warnings
+os.environ['AGENTOPS_ENABLED'] = 'false'
+
+from crewai_content_marketing.crew import ContentMarketingFlow
+
+warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
+# This main file runs the two-crew content marketing flow:#!/usr/bin/env python
+import sys
+import warnings
+from datetime import datetime
+
+from content_marketing_crew.crew import ContentMarketingFlow
+
+warnings.filterwarnings("ignore", category=SyntaxWarning, module="pysbd")
+
 # This main file is intended to be a way for you to run your
-# crew locally, so refrain from adding unnecessary logic into this file.
+# flow locally, so refrain from adding unnecessary logic into this file.
 # Replace with inputs you want to test with, it will automatically
 # interpolate any tasks and agents information
 
 def run():
     """
-    Run the crew.
+    Run the content marketing flow.
     """
-
     inputs = {
         'topic': 'AI in Digital Marketing',
         'target_audience': 'Marketing professionals and business owners',
@@ -38,9 +51,23 @@ def run():
     }
     
     try:
-        ContentMarketingCrew().crew().kickoff(inputs=inputs)
+        # Initialize and run the flow
+        flow = ContentMarketingFlow()
+        result = flow.kickoff(inputs=inputs)
+        
+        print("\n" + "=" * 60)
+        print("✅ Content Marketing Flow completed successfully!")
+        print("📁 Check the output directory for generated content files:")
+        print("   • instagram_post.md")
+        print("   • linkedin_post.md") 
+        print("   • twitter_tweet.md")
+        print("   • facebook_post.md")
+        print("   • blog_post.md")
+        
+        return result
+        
     except Exception as e:
-        raise Exception(f"An error occurred while running the crew: {e}")
+        raise Exception(f"An error occurred while running the flow: {e}")
 
 
 if __name__ == "__main__":
